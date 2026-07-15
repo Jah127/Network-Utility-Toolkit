@@ -1,13 +1,15 @@
 #Contains the functionality for the Ping Host Tool.
-import subprocess
+import socket
 
 def ping_host():
-    address = input("Enter an IP address or hostname: ")
+    host = input("Enter an IP address or hostname: ")
     print()
-    print(f"Pinging {address}...")
+    socket.create_connection(host)
 
-    command = ['ping', '-c', '1', address]
-    subprocess.run(command)
-
-    #print(subprocess)
-#ping_host()
+    try:
+        resolved_ip = socket.gethostbyname(host)
+        print(f"Resolved IP address: {resolved_ip}")
+        print()
+    except socket.gaierror:
+        print("Please enter a valid host name or IP address.")
+        print()
