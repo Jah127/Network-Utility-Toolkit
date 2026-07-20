@@ -10,7 +10,7 @@ def ping_host():
         resolved_ip = socket.gethostbyname(host)
         print(f"\nResolved IP address: {resolved_ip}\n")
         
-        port = int(input(f"Enter port to reach {host} through: "))
+        port = int(input(f"Enter port # to reach {host} through: "))
 
         #Time calculations
         start_time = time.perf_counter()
@@ -27,8 +27,9 @@ def ping_host():
     except socket.timeout:
         print("\nConnection timed out, please try again.\n")
     except ConnectionRefusedError:
-        print("\nPlease enter a valid port #.\n")
-    
+        print("\nPlease try againg by entering a valid port #.\n")
+
+#Output    
     print("Status: Reachable")
 
-    print(f"Your TTR is {elapsed_time:.2f}ms.\n")
+    print(f"The trip time for your packet is {elapsed_time:.2f}ms.\n")
