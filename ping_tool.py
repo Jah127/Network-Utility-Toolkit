@@ -14,6 +14,9 @@ def ping_host():
         #Port Number
             port = input(f"Enter port # to reach {host} through (hit 'Enter' to default to port 443): ")
             port = 443 if port == '' else int(port)
+        #Shows user its processing
+            print("==================================================")
+            print(f"\nAttempting TCP connection to port {port}...\n")
 
         #Time calculations
             start_time = time.perf_counter()
@@ -22,14 +25,24 @@ def ping_host():
             end_time = time.perf_counter()
             elapsed_time = (end_time - start_time) * 1000
 
-        #Output
-            print(f"\nResolved IP address: {resolved_ip}\n")
+        #Status Operations
+            status = "Reachable" if elapsed_time > 0 else "Unreachable"
 
+        #Output
+
+            print("Host Reachability Report")
+
+            print("=========================")
+
+            print(f"Resolved IP address: {resolved_ip}\n")
+            
+            print(f"Status: {status}\n")
+            
             print(f"Connection Time: {elapsed_time:.2f}ms.\n")
 
-            print(f"Status: {}\n")
-
             print(f"Port Number: {port}\n")
+            
+            print("==================================================")
             break
 #Crash prevention
         except ValueError:
