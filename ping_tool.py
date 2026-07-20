@@ -4,7 +4,7 @@ import time
 
 #Prompting for hostname or IP
 def ping_host():
-    host = input("Enter an IP address or hostname: ")
+    host = input("Enter an IP address or website: ")
 #Printing resolved IP & prompting for desired port #
     while True:
         try:
@@ -15,7 +15,6 @@ def ping_host():
             port = input(f"Enter port # to reach {host} through (hit 'Enter' to default to port 443): ")
             port = 443 if port == '' else int(port)
         #Shows user its processing
-            print("==================================================")
             print(f"\nAttempting TCP connection to port {port}...\n")
 
         #Time calculations
@@ -26,25 +25,27 @@ def ping_host():
             elapsed_time = (end_time - start_time) * 1000
 
         #Status Operations
-            status = "Reachable" if elapsed_time > 0 else "Unreachable"
-
+            status = "Reachable"
+            #Did have 'if-else' statement here, but realized if the program reached this
+            #line status would still equal "Reachable" no matter what
         #Output
-
-            print("Host Reachability Report")
-
             print("=========================")
+            print("Host Reachability Report")
+            print("=========================\n")
 
-            print(f"Resolved IP address: {resolved_ip}\n")
-            
+            print(f"Host Name: {host}\n")
+
+            print(f"Resolved IP: {resolved_ip}\n")
+        
+            print(f"Port Number: {port}\n")    
+        
             print(f"Status: {status}\n")
             
-            print(f"Connection Time: {elapsed_time:.2f}ms.\n")
+            print(f"Connection Time: {elapsed_time:.2f} ms.")
 
-            print(f"Port Number: {port}\n")
-            
-            print("==================================================")
+            print("==================================================\n")
             break
-#Crash prevention
+#Crash Prevention
         except ValueError:
             print("\nPlease enter a valid port #.\n")
         except socket.gaierror:
@@ -53,4 +54,12 @@ def ping_host():
             print("\nConnection timed out, please try again.\n")
         except ConnectionRefusedError:
             print("\nPlease try againg by entering a valid port #.\n")
+        except OSError:
+            print("\nOperating system is unable to run function.\n")
+            break
+        except ConnectionRefusedError:
+            print("\nConnection request to server blocked.\n")
+        except ConnectionResetError:
+            print("\nUnexpected connection loss. Please try again.\n")
+
         
