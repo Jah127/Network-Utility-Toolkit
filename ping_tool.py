@@ -6,30 +6,38 @@ import time
 def ping_host():
     host = input("Enter an IP address or hostname: ")
 #Printing resolved IP & prompting for desired port #
-    try:
-        resolved_ip = socket.gethostbyname(host)
-        print(f"\nResolved IP address: {resolved_ip}\n")
-        
-        port = int(input(f"Enter port # to reach {host} through: "))
+    while True:
+        try:
+        #IP Resolution
+            resolved_ip = socket.gethostbyname(host)
+            print(f"\nResolved IP address: {resolved_ip}\n")
+        #Port Number
+            port = input(f"Enter port # to reach {host} through (hit 'Enter' to default to port 443): ")
+            port = 443 if port == '' else int(port)
 
         #Time calculations
-        start_time = time.perf_counter()
-        connection = socket.create_connection((resolved_ip, port), timeout=5)
-        connection.close()
-        end_time = time.perf_counter()
-        elapsed_time = (end_time - start_time) * 1000
+            start_time = time.perf_counter()
+            connection = socket.create_connection((resolved_ip, port), timeout=5)
+            connection.close()
+            end_time = time.perf_counter()
+            elapsed_time = (end_time - start_time) * 1000
 
+        #Output
+            print(f"\nResolved IP address: {resolved_ip}\n")
+
+            print(f"Connection Time: {elapsed_time:.2f}ms.\n")
+
+            print(f"Status: {}\n")
+
+            print(f"Port Number: {port}\n")
+            break
 #Crash prevention
-    except ValueError:
-        print("\nPlease enter a valid port #.\n")
-    except socket.gaierror:
-        print("\nPlease enter a valid host name or IP address.\n")
-    except socket.timeout:
-        print("\nConnection timed out, please try again.\n")
-    except ConnectionRefusedError:
-        print("\nPlease try againg by entering a valid port #.\n")
-
-#Output    
-    print("Status: Reachable")
-
-    print(f"The trip time for your packet is {elapsed_time:.2f}ms.\n")
+        except ValueError:
+            print("\nPlease enter a valid port #.\n")
+        except socket.gaierror:
+            print("\nPlease enter a valid host name or IP address.\n")
+        except socket.timeout:
+            print("\nConnection timed out, please try again.\n")
+        except ConnectionRefusedError:
+            print("\nPlease try againg by entering a valid port #.\n")
+        
