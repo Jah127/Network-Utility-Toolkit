@@ -1,13 +1,30 @@
 #Contains the functionality for the Ping Host Tool.
 import socket
 import time
+#Output
+def ping_output(host, resolved_ip, port, status, elapsed_time):
+    print("=========================")
+    print("Host Reachability Report")
+    print("=========================\n")
 
-#Prompting for hostname or IP
+    print(f"Host: {host}\n")
+
+    print(f"Resolved IP: {resolved_ip}\n")
+            
+    print(f"Port: {port}\n")    
+            
+    print(f"Status: {status}\n")
+                
+    print(f"Connection Time: {elapsed_time:.2f} ms.")
+
+    print("==================================================\n")
+
 def ping_host():
-    host = input("Enter an IP address or website: ")
-#Printing resolved IP & prompting for desired port #
     while True:
         try:
+        #Prompting for desired host
+            host = input("Enter an IP address or website: ")
+
         #IP Resolution
             resolved_ip = socket.gethostbyname(host)
             print(f"\nResolved IP address: {resolved_ip}\n")
@@ -28,22 +45,8 @@ def ping_host():
             status = "Reachable"
             #Did have 'if-else' statement here, but realized if the program reached this
             #line status would still equal "Reachable" no matter what
-        #Output
-            print("=========================")
-            print("Host Reachability Report")
-            print("=========================\n")
 
-            print(f"Host Name: {host}\n")
-
-            print(f"Resolved IP: {resolved_ip}\n")
-        
-            print(f"Port Number: {port}\n")    
-        
-            print(f"Status: {status}\n")
-            
-            print(f"Connection Time: {elapsed_time:.2f} ms.")
-
-            print("==================================================\n")
+            ping_output(host, resolved_ip, port, status, elapsed_time)
             break
 #Crash Prevention
         except ValueError:
@@ -52,10 +55,8 @@ def ping_host():
             print("\nPlease enter a valid host name or IP address.\n")
         except socket.timeout:
             print("\nConnection timed out, please try again.\n")
-        except ConnectionRefusedError:
-            print("\nPlease try againg by entering a valid port #.\n")
         except OSError:
-            print("\nOperating system is unable to run function.\n")
+            print("\nUnable to establish a network connection.\n")
             break
         except ConnectionRefusedError:
             print("\nConnection request to server blocked.\n")
