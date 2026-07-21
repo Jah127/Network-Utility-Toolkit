@@ -15,7 +15,7 @@ def ping_output(host, resolved_ip, port, status, elapsed_time):
             
     print(f"Status: {status}\n")
                 
-    print(f"Connection Time: {elapsed_time:.2f} ms.")
+    print(f"Connection Time: {elapsed_time:.2f} ms")
 
     print("==================================================\n")
 
@@ -31,6 +31,8 @@ def ping_host():
         #Port Number
             port = input(f"Enter port # to reach {host} through (hit 'Enter' to default to port 443): ")
             port = 443 if port == '' else int(port)
+            if not 1 <= port <= 65535:
+                raise ValueError
         #Shows user its processing
             print(f"\nAttempting TCP connection to port {port}...\n")
 
@@ -55,11 +57,11 @@ def ping_host():
             print("\nPlease enter a valid host name or IP address.\n")
         except socket.timeout:
             print("\nConnection timed out, please try again.\n")
-        except OSError:
-            print("\nUnable to establish a network connection.\n")
-            break
         except ConnectionRefusedError:
             print("\nConnection request to server blocked.\n")
+            break
+        except OSError:
+            print("\nUnable to establish a network connection.\n")
         except ConnectionResetError:
             print("\nUnexpected connection loss. Please try again.\n")
 
