@@ -1,6 +1,6 @@
 #Main entry point for Network Utility Toolkit
 #Displays the menu and routes the user to their desired tool
-
+#running this 
 from ping_tool import ping_host
 
 def display_menu():
